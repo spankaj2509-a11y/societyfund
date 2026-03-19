@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .error-box {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #f4f4f4;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        a:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Error</h1>
+    <div class="error-box">
+        <p>{{ message }}</p>
+    </div>
+    
+    <a href="/">Back to Home</a>
+</body>
+</html>

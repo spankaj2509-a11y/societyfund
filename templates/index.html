@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        form {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .admin-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .admin-link a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Search</h1>
+    <form action="/search" method="post">
+        <label for="contact">Enter Contact Number:</label>
+        <input type="text" id="contact" name="contact" required>
+        <button type="submit">Search</button>
+    </form>
+    
+    <div class="admin-link">
+        <a href="/admin/login">Admin Panel</a>
+    </div>
+</body>
+</html>

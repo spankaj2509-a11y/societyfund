@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .confirm-section {
+            background-color: #fff3cd;
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #ff6b6b;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button, a {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        button {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        button:hover {
+            background-color: #c92a2a;
+        }
+        a {
+            background-color: #4CAF50;
+            color: white;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Delete User</h1>
+    <div class="confirm-section">
+        <p><strong>Are you sure you want to delete user "{{ user.name }}" (ID: {{ user.id }})?</strong></p>
+        <p>Contact: {{ user.contact }}</p>
+        <p>Date: {{ user.date }}</p>
+        <p>Amount: {{ user.amount }}</p>
+    </div>
+    
+    <div class="button-group">
+        <form action="/admin/delete/{{ user.id }}" method="post" style="flex: 1;">
+            <button type="submit">Yes, Delete</button>
+        </form>
+        <a href="/admin">Cancel</a>
+    </div>
+</body>
+</html>

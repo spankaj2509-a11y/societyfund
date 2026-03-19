@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        form {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .back-link {
+            margin-top: 20px;
+        }
+        .back-link a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit User</h1>
+    <form action="/admin/edit/{{ user.id }}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ user.name }}" required>
+        
+        <label for="contact">Contact:</label>
+        <input type="text" id="contact" name="contact" value="{{ user.contact }}" required>
+        
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="{% if user.date %}{{ user.date.strftime('%Y-%m-%d') }}{% endif %}" required>
+        
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount" value="{{ user.amount }}" required>
+        
+        <button type="submit">Update</button>
+    </form>
+    
+    <div class="back-link">
+        <a href="/admin">Back to Admin Panel</a>
+    </div>
+</body>
+</html>
