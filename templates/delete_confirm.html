@@ -1,64 +1,210 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Delete User</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete User Confirmation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px 0;
         }
-        .confirm-section {
-            background-color: #fff3cd;
-            padding: 20px;
-            border-radius: 5px;
+        
+        .delete-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            max-width: 550px;
+            width: 100%;
+        }
+        
+        .delete-container h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .delete-warning-icon {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 60px;
+            color: #ff6b6b;
+        }
+        
+        /* Alert Style */
+        .alert-danger-custom {
+            background-color: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            color: #721c24;
+        }
+        
+        .alert-danger-custom h3 {
+            color: #721c24;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .alert-danger-custom p {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        
+        .user-details {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
             border-left: 4px solid #ff6b6b;
         }
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
+        
+        .user-details p {
+            margin: 8px 0;
+            font-weight: 500;
+            color: #333;
         }
-        button, a {
-            flex: 1;
-            padding: 10px;
+        
+        .user-details span {
+            color: #667eea;
+            font-weight: 700;
+        }
+        
+        /* Button Group */
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .button-group button,
+        .button-group a {
+            padding: 12px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        button {
+        
+        .button-group button {
             background-color: #ff6b6b;
             color: white;
+            border: 2px solid #ff6b6b;
         }
-        button:hover {
+        
+        .button-group button:hover {
             background-color: #c92a2a;
+            border-color: #c92a2a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
         }
-        a {
-            background-color: #4CAF50;
+        
+        .button-group a {
+            background-color: #667eea;
             color: white;
+            border: 2px solid #667eea;
         }
-        a:hover {
-            background-color: #45a049;
+        
+        .button-group a:hover {
+            background-color: #764ba2;
+            border-color: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .breadcrumb-custom {
+            background-color: transparent;
+            padding: 0;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .breadcrumb-custom a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .breadcrumb-custom a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .delete-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .delete-warning-icon {
+                font-size: 50px;
+            }
+            
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group button,
+            .button-group a {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Delete User</h1>
-    <div class="confirm-section">
-        <p><strong>Are you sure you want to delete user "{{ user.name }}" (ID: {{ user.id }})?</strong></p>
-        <p>Contact: {{ user.contact }}</p>
-        <p>Date: {{ user.date }}</p>
-        <p>Amount: {{ user.amount }}</p>
+    <div class="delete-container">
+        <div class="delete-warning-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <h1>Delete User Confirmation</h1>
+        
+        <nav class="breadcrumb-custom mb-4">
+            <a href="/admin"><i class="fas fa-home"></i> Admin Panel</a>
+            <span> / Delete User</span>
+        </nav>
+        
+        <div class="alert-danger-custom">
+            <h3><i class="fas fa-warning"></i> Are you sure?</h3>
+            <p>You are about to permanently delete the following user from the database. This action cannot be undone.</p>
+        </div>
+        
+        <div class="user-details">
+            <p><strong>User ID:</strong> <span>{{ user.id }}</span></p>
+            <p><strong>Name:</strong> <span>{{ user.name }}</span></p>
+            <p><strong>Contact:</strong> <span>{{ user.contact }}</span></p>
+            <p><strong>Date:</strong> <span>{{ user.date }}</span></p>
+            <p><strong>Amount:</strong> <span>{{ user.amount }}</span></p>
+        </div>
+        
+        <div class="button-group">
+            <form action="/admin/delete/{{ user.id }}" method="post" style="flex: 1;">
+                <button type="submit" class="w-100">
+                    <i class="fas fa-trash-alt"></i> Yes, Delete
+                </button>
+            </form>
+            <a href="/admin" class="w-100">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+        </div>
     </div>
-    
-    <div class="button-group">
-        <form action="/admin/delete/{{ user.id }}" method="post" style="flex: 1;">
-            <button type="submit">Yes, Delete</button>
-        </form>
-        <a href="/admin">Cancel</a>
-    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

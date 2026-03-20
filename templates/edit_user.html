@@ -1,64 +1,195 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit User</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px 0;
         }
-        form {
-            background-color: #f4f4f4;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        input, button {
+        
+        .edit-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+        }
+        
+        .edit-container h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .edit-icon {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 40px;
+            color: #667eea;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .form-control {
+            padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
+            border-radius: 6px;
+            transition: all 0.3s ease;
         }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
-        button:hover {
-            background-color: #45a049;
-        }
-        .back-link {
+        
+        .btn-update {
+            background-color: #667eea;
+            border-color: #667eea;
+            padding: 12px 30px;
+            font-weight: 600;
             margin-top: 20px;
         }
+        
+        .btn-update:hover {
+            background-color: #764ba2;
+            border-color: #764ba2;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
         .back-link a {
-            color: #4CAF50;
+            color: #667eea;
             text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-custom {
+            background-color: transparent;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        
+        .breadcrumb-custom a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .breadcrumb-custom a:hover {
+            text-decoration: underline;
+        }
+        
+        .user-info-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .user-info-box label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        
+        .user-info-box p {
+            margin: 0;
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .edit-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .edit-icon {
+                font-size: 35px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Edit User</h1>
-    <form action="/admin/edit/{{ user.id }}" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{{ user.name }}" required>
+    <div class="edit-container">
+        <div class="edit-icon">
+            <i class="fas fa-user-edit"></i>
+        </div>
         
-        <label for="contact">Contact:</label>
-        <input type="text" id="contact" name="contact" value="{{ user.contact }}" required>
+        <h1>Edit User</h1>
         
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" value="{% if user.date %}{{ user.date.strftime('%Y-%m-%d') }}{% endif %}" required>
+        <nav class="breadcrumb-custom mb-4">
+            <a href="/admin"><i class="fas fa-home"></i> Admin Panel</a>
+            <span> / Edit User</span>
+        </nav>
         
-        <label for="amount">Amount:</label>
-        <input type="text" id="amount" name="amount" value="{{ user.amount }}" required>
+        <form action="/admin/edit/{{ user.id }}" method="post">
+            <div class="user-info-box">
+                <label>User ID:</label>
+                <p>{{ user.id }}</p>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="name" class="form-label">
+                    <i class="fas fa-user"></i> Name:
+                </label>
+                <input type="text" class="form-control form-control-lg" id="name" name="name" value="{{ user.name }}" required>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="contact" class="form-label">
+                    <i class="fas fa-phone"></i> Contact:
+                </label>
+                <input type="text" class="form-control form-control-lg" id="contact" name="contact" value="{{ user.contact }}" required>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label for="date" class="form-label">
+                    <i class="fas fa-calendar"></i> Date:
+                </label>
+                <input type="date" class="form-control form-control-lg" id="date" name="date" value="{% if user.date %}{{ user.date.strftime('%Y-%m-%d') }}{% endif %}" required>
+            </div>
+            
+            <div class="form-group mb-4">
+                <label for="amount" class="form-label">
+                    <i class="fas fa-money-bill"></i> Amount:
+                </label>
+                <input type="text" class="form-control form-control-lg" id="amount" name="amount" value="{{ user.amount }}" required>
+            </div>
+            
+            <button type="submit" class="btn btn-update btn-lg w-100">
+                <i class="fas fa-save"></i> Update User
+            </button>
+        </form>
         
-        <button type="submit">Update</button>
-    </form>
-    
-    <div class="back-link">
-        <a href="/admin">Back to Admin Panel</a>
+        <div class="back-link">
+            <a href="/admin"><i class="fas fa-arrow-left"></i> Back to Admin Panel</a>
+        </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

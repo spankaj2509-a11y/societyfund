@@ -1,341 +1,447 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         /* Navbar Styles */
         .navbar {
-            background-color: #2c3e50;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
-        .navbar h1 {
-            color: white;
+        .navbar-brand {
+            font-weight: 700;
             font-size: 24px;
         }
         
-        .navbar a {
-            color: white;
-            text-decoration: none;
+        .btn-logout {
             background-color: #e74c3c;
-            padding: 10px 20px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        
-        .navbar a:hover {
-            background-color: #c0392b;
-        }
-        
-        /* Main Container */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-        
-        /* Tab Styles */
-        .tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ddd;
-        }
-        
-        .tab-button {
-            padding: 12px 30px;
-            border: none;
-            background-color: #ecf0f1;
-            color: #333;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            border-bottom: 3px solid transparent;
+            border-color: #e74c3c;
             transition: all 0.3s ease;
         }
         
-        .tab-button:hover {
-            background-color: #d5dbdb;
+        .btn-logout:hover {
+            background-color: #c0392b;
+            border-color: #c0392b;
         }
         
-        .tab-button.active {
-            background-color: #4CAF50;
+        /* Main Container */
+        .main-container {
+            padding: 30px 15px;
+        }
+        
+        /* Tab Navigation */
+        .nav-tabs {
+            border-bottom: 2px solid #e0e0e0;
+            gap: 10px;
+        }
+        
+        .nav-link {
+            color: #555;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 12px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background-color: #f8f9fa;
+        }
+        
+        .nav-link.active {
             color: white;
-            border-bottom: 3px solid #4CAF50;
+            background-color: #667eea;
+            border-bottom-color: #667eea;
         }
         
         /* Tab Content */
         .tab-content {
-            display: none;
             background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .tab-content.active {
-            display: block;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
         }
         
         /* Filter Section */
         .filter-section {
-            background-color: #f4f4f4;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
         }
+        
+        .filter-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
         
         .filter-controls {
             display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
+            gap: 15px;
+            flex-wrap: nowrap;
+            align-items: flex-end;
         }
         
-        .filter-controls select,
-        .filter-controls input[type="text"] {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+        .filter-controls > div {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 0;
         }
         
-        .filter-controls input[type="text"] {
-            max-width: 150px;
-        }
-        
-        /* Table Styles */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        /* Form Styles */
-        .form-section {
-            background-color: white;
-        }
-        
-        .form-section h2 {
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: 500;
-        }
-        
-        input[type="text"],
-        input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+        .filter-controls label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
             font-size: 14px;
         }
         
-        input[type="text"]:focus,
-        input[type="date"]:focus {
-            outline: none;
-            border-color: #4CAF50;
-            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-        }
-        
-        .form-section button {
+        .filter-controls select,
+        .filter-controls input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: all 0.3s ease;
             width: 100%;
-            padding: 10px;
-            border: none;
-            background-color: #4CAF50;
+        }
+        
+        .filter-controls select:focus,
+        .filter-controls input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        /* Table Styles */
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table thead th {
+            background-color: #667eea;
             color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
+            font-weight: 600;
+            border: none;
+            padding: 15px;
+            text-align: left;
         }
         
-        .form-section button:hover {
-            background-color: #45a049;
+        .table tbody td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: middle;
         }
         
-        a {
-            color: #4CAF50;
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Action Links */
+        .action-links a {
+            padding: 5px 10px;
+            margin: 0 3px;
             text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
         }
         
-        a:hover {
-            text-decoration: underline;
+        .action-links a.edit {
+            color: #667eea;
+        }
+        
+        .action-links a.edit:hover {
+            background-color: #e7f0ff;
+            color: #5568d3;
+        }
+        
+        .action-links a.delete {
+            color: #e74c3c;
+        }
+        
+        .action-links a.delete:hover {
+            background-color: #fff5f5;
+            color: #c0392b;
+        }
+        
+        /* Form Styles */
+        .form-section h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .form-control {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        /* Button Styles */
+        .btn-add-user {
+            background-color: #667eea;
+            border-color: #667eea;
+            padding: 12px 30px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        .btn-add-user:hover {
+            background-color: #764ba2;
+            border-color: #764ba2;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .filter-section {
+                padding: 15px;
+            }
+            
+            .filter-controls {
+                flex-wrap: wrap;
+            }
+            
+            .filter-controls > div {
+                flex: 1 1 calc(50% - 8px);
+                min-width: 150px;
+            }
+            
+            .table {
+                font-size: 14px;
+            }
+            
+            .table thead th,
+            .table tbody td {
+                padding: 10px;
+            }
+            
+            .action-links {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .action-links a {
+                display: block;
+                text-align: center;
+            }
+            
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .nav-link {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
+        
+        .no-records {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        
+        .no-records i {
+            font-size: 48px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <div class="navbar">
-        <h1>Admin Panel</h1>
-        <a href="/admin/logout">Logout</a>
-    </div>
-    
-    <div class="container">
-        <!-- Tabs -->
-        <div class="tabs">
-            <button class="tab-button active" onclick="openTab(event, 'dashboard')">Dashboard</button>
-            <button class="tab-button" onclick="openTab(event, 'adduser')">Add User</button>
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">
+                <i class="fas fa-chart-bar"></i> Admin Panel
+            </span>
+            <a href="/admin/logout" class="btn btn-logout btn-sm">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
         </div>
+    </nav>
+    
+    <div class="container-fluid main-container">
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs" id="adminTabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="adduser-tab" data-bs-toggle="tab" href="#adduser" role="tab">
+                    <i class="fas fa-user-plus"></i> Add User
+                </a>
+            </li>
+        </ul>
         
-        <!-- Dashboard Tab -->
-        <div id="dashboard" class="tab-content active">
-            
-            <div class="filter-section">
-                <h3>Filter & Search Users</h3>
-                <div class="filter-controls">
-                    <label for="month">Month:</label>
-                    <select id="month" onchange="filterAdminResults()">
-                        <option value="">All Months</option>
-                        <option value="1" {% if month == 1 %}selected{% endif %}>January</option>
-                        <option value="2" {% if month == 2 %}selected{% endif %}>February</option>
-                        <option value="3" {% if month == 3 %}selected{% endif %}>March</option>
-                        <option value="4" {% if month == 4 %}selected{% endif %}>April</option>
-                        <option value="5" {% if month == 5 %}selected{% endif %}>May</option>
-                        <option value="6" {% if month == 6 %}selected{% endif %}>June</option>
-                        <option value="7" {% if month == 7 %}selected{% endif %}>July</option>
-                        <option value="8" {% if month == 8 %}selected{% endif %}>August</option>
-                        <option value="9" {% if month == 9 %}selected{% endif %}>September</option>
-                        <option value="10" {% if month == 10 %}selected{% endif %}>October</option>
-                        <option value="11" {% if month == 11 %}selected{% endif %}>November</option>
-                        <option value="12" {% if month == 12 %}selected{% endif %}>December</option>
-                    </select>
-                    
-                    <label for="year">Year:</label>
-                    <select id="year" onchange="filterAdminResults()">
-                        <option value="">All Years</option>
-                        <option value="2023" {% if year == 2023 %}selected{% endif %}>2023</option>
-                        <option value="2024" {% if year == 2024 %}selected{% endif %}>2024</option>
-                        <option value="2025" {% if year == 2025 %}selected{% endif %}>2025</option>
-                        <option value="2026" {% if year == 2026 %}selected{% endif %}>2026</option>
-                    </select>
-                    
-                    <label for="search-contact">Search Contact:</label>
-                    <input type="text" id="search-contact" placeholder="Enter contact number" onkeyup="filterAdminResults()">
+        <!-- Tab Content -->
+        <div class="tab-content" id="adminTabContent">
+            <!-- Dashboard Tab -->
+            <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
+                
+                <div class="filter-section">
+                    <h3><i class="fas fa-filter"></i> Filter & Search Users</h3>
+                    <div class="filter-controls">
+                        <div class="flex-grow-1">
+                            <label for="month">Month:</label>
+                            <select class="form-select" id="month" onchange="filterAdminResults()">
+                                <option value="">All Months</option>
+                                <option value="1" {% if month == 1 %}selected{% endif %}>January</option>
+                                <option value="2" {% if month == 2 %}selected{% endif %}>February</option>
+                                <option value="3" {% if month == 3 %}selected{% endif %}>March</option>
+                                <option value="4" {% if month == 4 %}selected{% endif %}>April</option>
+                                <option value="5" {% if month == 5 %}selected{% endif %}>May</option>
+                                <option value="6" {% if month == 6 %}selected{% endif %}>June</option>
+                                <option value="7" {% if month == 7 %}selected{% endif %}>July</option>
+                                <option value="8" {% if month == 8 %}selected{% endif %}>August</option>
+                                <option value="9" {% if month == 9 %}selected{% endif %}>September</option>
+                                <option value="10" {% if month == 10 %}selected{% endif %}>October</option>
+                                <option value="11" {% if month == 11 %}selected{% endif %}>November</option>
+                                <option value="12" {% if month == 12 %}selected{% endif %}>December</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex-grow-1">
+                            <label for="year">Year:</label>
+                            <select class="form-select" id="year" onchange="filterAdminResults()">
+                                <option value="">All Years</option>
+                                <option value="2023" {% if year == 2023 %}selected{% endif %}>2023</option>
+                                <option value="2024" {% if year == 2024 %}selected{% endif %}>2024</option>
+                                <option value="2025" {% if year == 2025 %}selected{% endif %}>2025</option>
+                                <option value="2026" {% if year == 2026 %}selected{% endif %}>2026</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex-grow-1">
+                            <label for="search-contact">Search Contact:</label>
+                            <input type="text" class="form-control" id="search-contact" placeholder="Enter contact number" onkeyup="filterAdminResults()">
+                        </div>
+                    </div>
+                </div>
+                
+                <h2><i class="fas fa-users"></i> All Users</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-id-badge"></i> ID</th>
+                                <th><i class="fas fa-user"></i> Name</th>
+                                <th><i class="fas fa-phone"></i> Contact</th>
+                                <th><i class="fas fa-calendar"></i> Date</th>
+                                <th><i class="fas fa-money-bill"></i> Amount</th>
+                                <th><i class="fas fa-cogs"></i> Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-results-table">
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.contact }}</td>
+                                <td>{{ user.date }}</td>
+                                <td>{{ user.amount }}</td>
+                                <td class="action-links">
+                                    <a href="/admin/edit/{{ user.id }}" class="edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="/admin/delete/{{ user.id }}" class="delete">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
-            <h2>All Users</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Contact</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="admin-results-table">
-                    {% for user in users %}
-                    <tr>
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.contact }}</td>
-                        <td>{{ user.date }}</td>
-                        <td>{{ user.amount }}</td>
-                        <td>
-                            <a href="/admin/edit/{{ user.id }}">Edit</a> |
-                            <a href="/admin/delete/{{ user.id }}">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- Add User Tab -->
-        <div id="adduser" class="tab-content">
-            <div class="form-section">
-                <h2>Add New User</h2>
-                <form action="/admin/users" method="post">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" placeholder="Enter user name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contact">Contact Number:</label>
-                        <input type="text" id="contact" name="contact" placeholder="Enter contact number" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="date">Date:</label>
-                        <input type="date" id="date" name="date" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="amount">Amount:</label>
-                        <input type="text" id="amount" name="amount" placeholder="Enter amount" required>
-                    </div>
-                    
-                    <button type="submit">Add User</button>
-                </form>
+            <!-- Add User Tab -->
+            <div class="tab-pane fade" id="adduser" role="tabpanel">
+                <div class="form-section">
+                    <h2><i class="fas fa-user-plus"></i> Add New User</h2>
+                    <form action="/admin/users" method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter user name" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="contact" class="form-label">Contact Number:</label>
+                                <input type="text" class="form-control" id="contact" name="contact" placeholder="Enter contact number" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="date" class="form-label">Date:</label>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="amount" class="form-label">Amount:</label>
+                                <input type="text" class="form-control" id="amount" name="amount" placeholder="Enter amount" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-add-user btn-lg">
+                            <i class="fas fa-plus"></i> Add New User
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        function openTab(evt, tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(tab => tab.classList.remove('active'));
-            
-            // Remove active class from all tab buttons
-            const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons.forEach(button => button.classList.remove('active'));
-            
-            // Show the selected tab and mark button as active
-            document.getElementById(tabName).classList.add('active');
-            evt.currentTarget.classList.add('active');
-        }
-        
         function filterAdminResults() {
             const month = document.getElementById('month').value;
             const year = document.getElementById('year').value;
             const searchContact = document.getElementById('search-contact').value.toLowerCase();
             
-            // Make AJAX request to get filtered results
             const params = new URLSearchParams();
             if (month) params.append('month', month);
             if (year) params.append('year', year);
@@ -351,7 +457,6 @@
                 const tbody = document.getElementById('admin-results-table');
                 tbody.innerHTML = '';
                 
-                // Filter by contact number on client-side
                 const filteredUsers = data.users.filter(user => {
                     if (searchContact) {
                         return user.contact.toLowerCase().includes(searchContact);
@@ -360,7 +465,7 @@
                 });
                 
                 if (filteredUsers.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No records found</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" class="no-records"><i class="fas fa-inbox"></i> <p>No records found</p></td></tr>';
                 } else {
                     filteredUsers.forEach(user => {
                         const row = document.createElement('tr');
@@ -370,9 +475,9 @@
                             <td>${user.contact}</td>
                             <td>${user.date}</td>
                             <td>${user.amount}</td>
-                            <td>
-                                <a href="/admin/edit/${user.id}">Edit</a> |
-                                <a href="/admin/delete/${user.id}">Delete</a>
+                            <td class="action-links">
+                                <a href="/admin/edit/${user.id}" class="edit"><i class="fas fa-edit"></i> Edit</a>
+                                <a href="/admin/delete/${user.id}" class="delete"><i class="fas fa-trash"></i> Delete</a>
                             </td>
                         `;
                         tbody.appendChild(row);
