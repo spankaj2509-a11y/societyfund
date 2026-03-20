@@ -20,7 +20,7 @@ from datetime import datetime
 # engine = create_engine(DATABASE_URL)
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Base = declarative_base()
-DATABASE_URL = "mysql+pymysql://if0_41430853:yagzOVHbQoJuDBn@sql306.infinityfree.com:3306/if0_41430853_societyfund"
+DATABASE_URL = "mysql+pymysql://sql12820712:NtnhbRutT7@sql12.freesqldatabase.com/sql12820712"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
