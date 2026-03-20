@@ -16,14 +16,14 @@ from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
 # Database setup - using MySQL from XAMPP
-DATABASE_URL = "mysql+pymysql://root:@localhost/user_management"
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
-# DATABASE_URL = "mysql+pymysql://sql12820712:NtnhbRutT7@sql12.freesqldatabase.com/sql12820712"
+# DATABASE_URL = "mysql+pymysql://root:@localhost/user_management"
 # engine = create_engine(DATABASE_URL)
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Base = declarative_base()
+DATABASE_URL = "mysql+pymysql://sql12820712:NtnhbRutT7@sql12.freesqldatabase.com/sql12820712"
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
 
 
 # User model - stores user data
